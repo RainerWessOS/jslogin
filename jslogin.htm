@@ -1,0 +1,73 @@
+<html>
+    <head>
+      <title>Secure Javascript Login page</title>
+      <meta charset="UTF-8" />
+     <meta name="Description" content="jslogin - A secure javascript login page">
+	<meta name="Author" content="Rainer Wess">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+<script>
+/* 
+	jslogin - Rainer Wess - 04.01.2018
+	
+Secure Javascript Login Script - no userids or passwords are stored in the script.
+
+How to use: 
+Copy this file into a folder on your webspace, make a  subdirectory user were the individual private websites for the users are stored. For every user you allow to login, are two files nessesary. A little .gif-image and a website (.htm). Lets say you want a user "Paul" with the password "Asd613" to login.  Place a little .gif-image named Paul_Asd613.gif in the user directory.Which image doesnt matter, it will be shown nowhere, but it should be as small as posible. Then create a website Paul_Asd613.htm in the user directory. This is the website the user will see after he logged in.
+	
+How it works:
+When a user tries to login the script tries to load an image {userid}_{password}.gif - if this is successful the userid and password are valid and the welcome-page for the user is loaded. If user/password are not valid  loading the image fails - In this case no website is loaded. The image is just there to prevent http 404 (file not found) error messages for nonexisting oder mistyped user/password - combinations, which would be the case if the private website would be directly loaded. 
+
+This script is only secure when:
+1) Directory listing for the webspace is disabled (normaly the case)
+2) The private/protected websites are named that it is impossible to guess them: Do NOT name them members.htm, privat.htm, secret.htm ...a good name is for example Dghf8drghe3rzu.htm
+
+	*/
+	
+var userid;
+var password;
+
+function id(id) {
+	return document.getElementById(id);
+}
+
+function showInfo(txt) {
+	id("info").innerHTML = txt;
+}
+
+function loginDenied() { 
+  showInfo("Login failed."); 
+  id("password").value = "";
+}
+
+function loginSuccess() { 
+   showInfo("Logging in."); 
+   window.location = "user/" + userid + "_" + password + ".htm"; 
+}
+
+function login() { 
+   var shadow = new Image();
+   shadow.onerror = loginDenied;
+   shadow.onload = loginSuccess;
+   userid = id("userid").value;   
+   password = id("password").value;   
+   shadow.src = "user/" + userid + "_" + password + ".gif";
+}
+
+</script>
+
+    </head>
+    <body>
+    	<p>
+<form oninput="showInfo(' ')">
+	User<br><input type="text" id="userid" required></input><p>
+	Password<br>
+<input type="password" id="password"   required></input><p>
+<input type="button" onclick="login()" value="login"></input>
+</form>
+<p>
+<span id="info">&nbsp;</span><p>
+Test-User: Paul - Password: Asd613
+
+    </body>
+</html>
