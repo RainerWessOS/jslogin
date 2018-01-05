@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html>
     <head>
       <title>Secure Javascript Login page</title>
@@ -60,10 +61,9 @@ function login() {
     <body>
     	<p>
 <form oninput="showInfo(' ')">
-	User<br><input type="text" id="userid" required></input><p>
-	Password<br>
-<input type="password" id="password"   required></input><p>
-<input type="button" onclick="login()" value="login"></input>
+	<p><input type="text" id="userid" placeholder="Username" autofocus required></input><p>
+<input type="password" id="password"   placeholder="Password" required></input><p>
+<input type="button" onclick="login()" value="LOG IN"></input>
 </form>
 <p>
 <span id="info">&nbsp;</span><p>
