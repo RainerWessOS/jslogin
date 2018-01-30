@@ -1,11 +1,12 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
     <head>
-      <title>Secure Javascript Login page</title>
+      <title>Secure JS Login / Authentication</title>
       <meta charset="UTF-8" />
-     <meta name="Description" content="jslogin - A secure javascript login page">
-	<meta name="Author" content="Rainer Wess">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta name="Description" content="jslogin - A secure javascript login page">
+         <meta name="Author" content="Rainer Wess">
+   
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
 <script>
 
@@ -40,52 +41,54 @@ you could write:
 shadow.onerror = function(){accessDenied()};
 shadow.onload = function(){loginSuccess()};
 
-*/
 
-	
+*/
+    
 var userid;
-var passwd;
+var password;
+var baseurl = "http://daddelkiste.bplaced.net/jslogin/user/";
 
 function id(id) {
-	return document.getElementById(id);
+    return document.getElementById(id);
 }
 
 function showInfo(txt) {
-	id("info").innerHTML = txt;
+    id("info").innerHTML = txt;
 }
 
 function loginDenied() { 
   showInfo("Login failed."); 
-  id("passwd").value = "";
+  id("password").value = "";
 }
 
 function loginSuccess() { 
    showInfo("Logging in."); 
-   window.location = "user/" + userid + "_" + passwd + ".htm"; 
+   window.location = baseurl + userid + "_" + password + ".htm";
 }
 
 function login() { 
    var shadow = new Image();
-   shadow.onerror = loginDenied;
-   shadow.onload = loginSuccess;
+   shadow.onerror = function(){accessDenied()};
+   shadow.onload = function(){loginSuccess()};
    userid = id("userid").value;   
-   passwd = id("passwd").value;   
-   shadow.src = "user/" + userid + "_" + passwd + ".gif";
+   password = id("password").value;   
+   shadow.src = baseurl + userid + "_" + password + ".gif";
 }
-
 </script>
 
     </head>
+
     <body>
-    	<p>
+        <p>
 <form oninput="showInfo(' ')">
-	<p><input type="text" id="userid" placeholder="Username" autofocus required /><p>
-<input type="password" id="passwd"   placeholder="Password" required /><p>
-<input type="button" onclick="login()" value="LOG IN"/>
+    <p><input type="text" id="userid"  placeholder="Username" autofocus required></input><p>
+<input type="password" id="password"   placeholder="Password" required></input><p>
+<input type="button" onclick="login()" value="LOG IN"></input>
 </form>
 <p>
+
 <span id="info">&nbsp;</span><p>
-Test-User: Paul - Password: Asd613
+
 
     </body>
 </html>
